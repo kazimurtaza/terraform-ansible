@@ -2,7 +2,7 @@
 
 This example demostrates you could provision Immutable Infrastructure with encapsulation - *“Automating the process of provisioning, configuring, deploying, and tearing down cloud infrastructure and services.”*
 
-This could be expended as required, I have tried to keep the example as simple as possible while tried to follow all the best practices.
+This could be expended as required, I have tried to keep this example as simple as possible while trying to follow all the best practices.
 
 ## Getting Started
 
