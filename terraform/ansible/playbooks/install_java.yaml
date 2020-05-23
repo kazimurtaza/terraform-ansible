@@ -1,0 +1,37 @@
+---
+- hosts: java
+  tasks: 
+  - name: Install dependencies
+    become: yes
+    apt:
+      name: "{{ packages }}"  
+    vars:
+      packages:    
+      - wget
+      - ca-certificates
+      - gnupg2
+      - curl 
+      - software-properties-common
+      state: latest 
+
+  - name: Transfer the script
+    copy: src=add_java.sh dest=/home/murtaza mode=0777
+
+  - name: Execute the script
+    become: yes
+    command: sh /home/murtaza/add_java.sh
+
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400
+
+  - name: Install SAP Java 11
+    become: yes
+    apt:
+      name: "{{ packages }}"  
+    vars:
+      packages:    
+      - sapmachine-11-jdk

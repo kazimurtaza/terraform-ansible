@@ -1,0 +1,1 @@
+unzip -o -q /home/murtaza/application.zip -d /opt/application

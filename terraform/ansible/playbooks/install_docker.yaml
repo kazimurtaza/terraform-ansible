@@ -1,0 +1,55 @@
+---
+- hosts: docker
+  tasks: 
+      - name: Install dependencies
+        become: yes
+        apt:
+          name: "{{ packages }}"  
+        vars:
+          packages:    
+          - wget
+          - ca-certificates
+          - gnupg2
+          - curl
+          - apt-transport-https
+          - software-properties-common
+          - git
+          state: latest
+
+      - name: Add Apt signing key from official docker repo
+        become: yes
+        apt_key:
+          url: https://download.docker.com/linux/debian/gpg
+          state: present
+
+      - name: add docker official repository for Debian Stretch
+        become: yes
+        apt_repository:
+          repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+          state: present
+
+      - name: Update and upgrade apt packages
+        become: true
+        apt:
+          update_cache: yes
+          cache_valid_time: 86400
+
+      - name: Index new repo into the cache
+        become: yes
+        apt:
+          name: "*"
+          state: latest
+          update_cache: yes
+          force_apt_get: yes
+
+      - name: Install docker-ce
+        become: yes
+        apt:
+          name: "{{ packages }}"  
+        vars:
+          packages:    
+          - docker-ce
+          - docker-compose
+          - docker-ce-cli
+          - containerd.io
+          state: latest
